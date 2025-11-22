@@ -1,20 +1,22 @@
 package com.example.appscheduler
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appscheduler.databinding.ActivityMainBinding
 import com.example.appscheduler.datasource.model.InstalledAppInformation
+import com.example.appscheduler.dialogs.SchedulerDialog
+import com.example.appscheduler.listeners.OnIItemClickListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
     private lateinit var installedAppInformationAdapter: InstalledAppInformationAdapter
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var schedulerDialog: SchedulerDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +31,23 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        installedAppInformationAdapter = InstalledAppInformationAdapter()
+        setUpSchedulerRecyclerView()
 
+        setUpDialog()
+
+        installedAppInformationAdapter.setData(getLaunchableApp())
+    }
+
+    private fun setUpSchedulerRecyclerView(){
+        installedAppInformationAdapter = InstalledAppInformationAdapter(this)
         binding.installedAppInfoRecyclerview.adapter = installedAppInformationAdapter
+    }
 
+    private fun setUpDialog(){
+        schedulerDialog = SchedulerDialog(this)
+    }
 
+    private fun getLaunchableApp() : List<InstalledAppInformation>{
         val pm = this.packageManager
 
         val intent = Intent(Intent.ACTION_MAIN, null)
@@ -49,6 +63,10 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        installedAppInformationAdapter.setData(launchableApps)
+        return launchableApps
+    }
+
+    override fun onItemClick(appPackageName: String?) {
+        schedulerDialog.show()
     }
 }

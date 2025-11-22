@@ -1,17 +1,17 @@
 package com.example.appscheduler
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appscheduler.databinding.SingleItemInstalledAppBinding
 import com.example.appscheduler.datasource.model.InstalledAppInformation
+import com.example.appscheduler.listeners.OnIItemClickListener
 import com.example.appscheduler.utility.DiffUtilCallback
 
-class InstalledAppInformationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val installAppInformationList = ArrayList<InstalledAppInformation>()
-
 
     fun setData(installedApp: List<InstalledAppInformation>) {
         val oldData = ArrayList(installedApp)
@@ -35,7 +35,7 @@ class InstalledAppInformationAdapter : RecyclerView.Adapter<RecyclerView.ViewHol
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-        return SingleItemInstalledAppInformationViewHolder.create(parent)
+        return SingleItemInstalledAppInformationViewHolder.create(parent,onItemClickListener)
     }
 
     override fun onBindViewHolder(
@@ -48,18 +48,31 @@ class InstalledAppInformationAdapter : RecyclerView.Adapter<RecyclerView.ViewHol
     override fun getItemCount(): Int = installAppInformationList.size
 
     class SingleItemInstalledAppInformationViewHolder(
-        private val binding: SingleItemInstalledAppBinding
+        private val binding: SingleItemInstalledAppBinding,
+        private val onIItemClickListener: OnIItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
-            fun create(parent: ViewGroup): SingleItemInstalledAppInformationViewHolder {
+            fun create(parent: ViewGroup, onIItemClickListener: OnIItemClickListener): SingleItemInstalledAppInformationViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = SingleItemInstalledAppBinding.inflate(inflater, parent, false)
-                return SingleItemInstalledAppInformationViewHolder(binding)
+                return SingleItemInstalledAppInformationViewHolder(binding, onIItemClickListener)
+            }
+        }
+
+        init {
+            itemView.setOnClickListener {
+                val appPackageName = itemView.tag as? String
+                appPackageName?.let {
+                    onIItemClickListener.onItemClick(appPackageName)
+                } ?: run {
+                    Toast.makeText(itemView.context, "No app found", Toast.LENGTH_LONG).show()
+                }
             }
         }
 
         fun bind(information : InstalledAppInformation?){
+            itemView.tag = information?.packageNameOfApp
             binding.apply {
                 appIcon.setImageDrawable(information?.icon)
                 appName.text = information?.appName
