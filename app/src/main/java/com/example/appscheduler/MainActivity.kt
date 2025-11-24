@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appscheduler.databinding.ActivityMainBinding
 import com.example.appscheduler.datasource.model.InstalledAppInformation
+import com.example.appscheduler.datasource.model.Timer
 import com.example.appscheduler.dialogs.SchedulerDialog
 import com.example.appscheduler.listeners.OnIItemClickListener
 
@@ -15,7 +16,6 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
     private lateinit var installedAppInformationAdapter: InstalledAppInformationAdapter
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var schedulerDialog: SchedulerDialog
 
 
@@ -68,5 +68,9 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
     override fun onItemClick(appPackageName: String?) {
         schedulerDialog.show()
+    }
+
+    override fun setSchedule(time: Timer) {
+        schedulerDialog.dismiss()
     }
 }

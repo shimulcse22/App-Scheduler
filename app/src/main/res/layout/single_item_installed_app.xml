@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceCircle"
-        tools:src="@drawable/ic_icon"
+        tools:src="@drawable/ic_clock"
         />
 
     <androidx.appcompat.widget.AppCompatTextView

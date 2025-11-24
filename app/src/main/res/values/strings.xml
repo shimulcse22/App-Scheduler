@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">App Scheduler</string>
     <string name="set_schedule">Set Schedule</string>
+    <string name="set_date">Set date</string>
+    <string name="select_date">Select date</string>
+    <string name="set_time">Set Time</string>
 </resources>
