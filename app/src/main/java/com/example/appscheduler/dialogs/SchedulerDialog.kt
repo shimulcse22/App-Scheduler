@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import com.example.appscheduler.R
 import com.example.appscheduler.databinding.DialogSetScheduleLayoutBinding
 import com.example.appscheduler.datasource.model.Timer
@@ -48,6 +47,8 @@ class SchedulerDialog(
                 min = selectedMinute.orZero()
             )
             (context as? OnIItemClickListener)?.setSchedule(time)
+            binding.dateInput.setText("")
+            binding.timeInput.setText("")
         }
     }
 

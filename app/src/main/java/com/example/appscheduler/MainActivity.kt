@@ -11,6 +11,9 @@ import com.example.appscheduler.datasource.model.InstalledAppInformation
 import com.example.appscheduler.datasource.model.Timer
 import com.example.appscheduler.dialogs.SchedulerDialog
 import com.example.appscheduler.listeners.OnIItemClickListener
+import com.example.appscheduler.utility.IT_THE_TIME
+import com.example.appscheduler.utility.scheduleAlarm
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var schedulerDialog: SchedulerDialog
 
+    private val viewModel : MainViewModel  by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,6 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
     private fun getLaunchableApp() : List<InstalledAppInformation>{
         val pm = this.packageManager
-
         val intent = Intent(Intent.ACTION_MAIN, null)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
 
@@ -66,11 +69,20 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
         return launchableApps
     }
 
-    override fun onItemClick(appPackageName: String?) {
+    override fun onItemClick(installedAppInformation: InstalledAppInformation?) {
         schedulerDialog.show()
+        viewModel.installedAppInformation.value = installedAppInformation
     }
 
     override fun setSchedule(time: Timer) {
         schedulerDialog.dismiss()
+        scheduleAlarm(
+            this,
+            time,
+            IT_THE_TIME,
+            "Open your scheduled ${viewModel.installedAppInformation.value?.appName} app",
+            viewModel.installedAppInformation.value?.packageNameOfApp ?: packageName,
+        )
+        viewModel.saveAlarmInformation(time)
     }
 }

@@ -51,7 +51,6 @@ class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListen
         private val binding: SingleItemInstalledAppBinding,
         private val onIItemClickListener: OnIItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
-
         companion object {
             fun create(parent: ViewGroup, onIItemClickListener: OnIItemClickListener): SingleItemInstalledAppInformationViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
@@ -62,9 +61,9 @@ class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListen
 
         init {
             itemView.setOnClickListener {
-                val appPackageName = itemView.tag as? String
-                appPackageName?.let {
-                    onIItemClickListener.onItemClick(appPackageName)
+                val installedInformation = itemView.tag as? InstalledAppInformation
+                installedInformation?.let {
+                    onIItemClickListener.onItemClick(installedInformation)
                 } ?: run {
                     Toast.makeText(itemView.context, "No app found", Toast.LENGTH_LONG).show()
                 }
@@ -72,7 +71,7 @@ class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListen
         }
 
         fun bind(information : InstalledAppInformation?){
-            itemView.tag = information?.packageNameOfApp
+            itemView.tag = information
             binding.apply {
                 appIcon.setImageDrawable(information?.icon)
                 appName.text = information?.appName

@@ -6,9 +6,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.RequiresPermission
 import androidx.recyclerview.widget.DiffUtil
-import com.example.appscheduler.AlarmReceiver
+import com.example.appscheduler.boradcastreceiver.AlarmReceiver
 import com.example.appscheduler.datasource.model.Timer
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -48,8 +47,8 @@ class DiffUtilCallback<T>(
 
 
 @SuppressLint("ScheduleExactAlarm")
-fun scheduleAlarm(context: Context, timer: Timer, title: String, message: String) {
-    val sdf = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+fun scheduleAlarm(context: Context, timer: Timer, title: String, message: String,packageName : String) {
+    val sdf = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
     val calendar = Calendar.getInstance()
     val date = sdf.parse(timer.date)
     calendar.time = date!!
@@ -58,9 +57,15 @@ fun scheduleAlarm(context: Context, timer: Timer, title: String, message: String
     calendar.set(Calendar.SECOND, 0)
     calendar.set(Calendar.MILLISECOND, 0)
 
+    val now = Calendar.getInstance()
+    if (calendar.before(now)) {
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+    }
+
     val intent = Intent(context, AlarmReceiver::class.java).apply {
-        putExtra("title", title)
-        putExtra("message", message)
+        putExtra(TITLE, title)
+        putExtra(MESSAGE, message)
+        putExtra(TARGET_PACKAGE,packageName)
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
