@@ -11,11 +11,16 @@ import com.example.appscheduler.datasource.model.InstalledAppInformation
 import com.example.appscheduler.datasource.model.Timer
 import com.example.appscheduler.dialogs.SchedulerDialog
 import com.example.appscheduler.listeners.OnIItemClickListener
+import com.example.appscheduler.listeners.ScheduleListener
+import com.example.appscheduler.utility.CANCELED
 import com.example.appscheduler.utility.IT_THE_TIME
+import com.example.appscheduler.utility.cancelAlarm
+import com.example.appscheduler.utility.orEmpty
+import com.example.appscheduler.utility.orZero
 import com.example.appscheduler.utility.scheduleAlarm
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), OnIItemClickListener {
+class MainActivity : AppCompatActivity(), OnIItemClickListener, ScheduleListener {
 
     private lateinit var installedAppInformationAdapter: InstalledAppInformationAdapter
     private lateinit var binding: ActivityMainBinding
@@ -36,10 +41,15 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
         }
 
         setUpSchedulerRecyclerView()
-
+        observeData()
         setUpDialog()
 
         installedAppInformationAdapter.setData(getLaunchableApp())
+
+        binding.buttonShowHistory.setOnClickListener {
+            val historyIntent = Intent(this, HistoryActivity::class.java)
+            startActivity(historyIntent)
+        }
     }
 
     private fun setUpSchedulerRecyclerView(){
@@ -49,6 +59,21 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
 
     private fun setUpDialog(){
         schedulerDialog = SchedulerDialog(this)
+    }
+
+    private fun observeData() {
+        viewModel.onGetAppScheduleByPackage().observe(this){
+            if(it == null || it.executionInformation == CANCELED){
+                schedulerDialog.show()
+            } else {
+                val timer = Timer(
+                    date = it.date.orEmpty(),
+                    hour = it.hour.orZero(),
+                    min = it.min.orZero()
+                )
+                UpdateAppScheduleBottomSheet.show(supportFragmentManager,timer)
+            }
+        }
     }
 
     private fun getLaunchableApp() : List<InstalledAppInformation>{
@@ -70,7 +95,7 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
     }
 
     override fun onItemClick(installedAppInformation: InstalledAppInformation?) {
-        schedulerDialog.show()
+        viewModel.getAppScheduleByPackageName(installedAppInformation?.packageNameOfApp)
         viewModel.installedAppInformation.value = installedAppInformation
     }
 
@@ -84,5 +109,10 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener {
             viewModel.installedAppInformation.value?.packageNameOfApp ?: packageName,
         )
         viewModel.saveAlarmInformation(time)
+    }
+
+    override fun onCancelButtonClick(timer: Timer?) {
+        cancelAlarm(this,timer)
+        viewModel.cancelSchedule()
     }
 }

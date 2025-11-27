@@ -10,10 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AppScheduleDao {
     @Query("SELECT * FROM schedule_table ORDER BY id ASC")
-    fun getAllSchedules(): Flow<List<AppScheduleTable>>
+    suspend fun getAllSchedules(): List<AppScheduleTable>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addSchedule(schedule: AppScheduleTable)
+
     @Update
     suspend fun updateSchedule(schedule: AppScheduleTable)
+
+    @Query("SELECT * FROM schedule_table WHERE appPackage = :appPackageName AND executionInformation = 'Not executed' LIMIT 1")
+    fun getAppScheduleByAppPackageName(appPackageName: String): Flow<AppScheduleTable?>
 }

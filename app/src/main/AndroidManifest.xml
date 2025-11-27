@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:name=".AppSchedulerApp"
@@ -26,6 +27,9 @@
         </activity>
 
         <activity android:name=".MainActivity"
+            android:exported="true"/>
+
+        <activity android:name=".HistoryActivity"
             android:exported="true"/>
 
         <receiver android:name=".boradcastreceiver.AlarmReceiver" />

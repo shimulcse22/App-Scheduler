@@ -13,6 +13,7 @@ lifecycle = "2.10.0"
 koin = "4.1.1"
 room = "2.8.4"
 coreSplash = "1.0.1"
+coroutines = "1.10.2"
 
 
 [libraries]
@@ -32,6 +33,8 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplash" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

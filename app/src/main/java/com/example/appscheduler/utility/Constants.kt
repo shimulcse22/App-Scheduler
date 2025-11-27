@@ -10,3 +10,7 @@ const val TARGET_PACKAGE = "target_package"
 const val SCHEDULE_NOTIFICATION= "Schedule Notifications"
 const val STOP = "stop"
 const val DATE_FORMAT = "dd/MM/yyyy"
+const val TIME ="time"
+const val NOT_EXECUTED ="Not executed"
+const val CANCELED ="Canceled"
+

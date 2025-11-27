@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="border_color">#E0E0E0</color>
     <color name="hint_text_color">#BDBDBD</color>
+    <color name="red">#A8172D</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

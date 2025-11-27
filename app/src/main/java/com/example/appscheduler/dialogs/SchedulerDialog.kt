@@ -31,7 +31,6 @@ class SchedulerDialog(
         binding = DialogSetScheduleLayoutBinding.inflate(layoutInflater, null, false)
         setContentView(binding.root)
         setCancelable(true)
-
         binding.dateInput.setOnClickListener {
             showDatePicker()
         }
@@ -47,9 +46,13 @@ class SchedulerDialog(
                 min = selectedMinute.orZero()
             )
             (context as? OnIItemClickListener)?.setSchedule(time)
-            binding.dateInput.setText("")
-            binding.timeInput.setText("")
+            setEmpty()
         }
+    }
+
+    private fun setEmpty(){
+        binding.dateInput.setText("")
+        binding.timeInput.setText("")
     }
 
     private fun showDatePicker() {

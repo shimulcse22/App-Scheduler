@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 data class AppScheduleTable(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val appPackage: String,
-    val appName : String,
-    val date: String,
-    val hour: Int,
-    val min :Int,
-    val isExecute : Boolean = false
+    val appPackage: String? = "",
+    val appName : String? = "",
+    val date: String? = "",
+    val hour: Int?,
+    val min :Int?,
+    val executionInformation : String?="",
 )

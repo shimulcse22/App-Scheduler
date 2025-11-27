@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.example.appscheduler.utility.TARGET_PACKAGE
+import com.example.appscheduler.utility.orEmpty
 
 class LaunchAndStopAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -17,7 +18,7 @@ class LaunchAndStopAlarmReceiver : BroadcastReceiver() {
 
         val targetPackage = intent.getStringExtra(TARGET_PACKAGE)
 
-        val launchIntent = context.packageManager.getLaunchIntentForPackage(targetPackage!!)
+        val launchIntent = context.packageManager.getLaunchIntentForPackage(targetPackage.orEmpty())
         launchIntent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(launchIntent)
     }

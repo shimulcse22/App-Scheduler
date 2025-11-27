@@ -2,7 +2,6 @@ package com.example.appscheduler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appscheduler.databinding.SingleItemInstalledAppBinding
@@ -13,7 +12,8 @@ import com.example.appscheduler.utility.DiffUtilCallback
 class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val installAppInformationList = ArrayList<InstalledAppInformation>()
 
-    fun setData(installedApp: List<InstalledAppInformation>) {
+    fun setData(installedApp: List<InstalledAppInformation>?) {
+        installedApp ?: return
         val oldData = ArrayList(installedApp)
         installAppInformationList.clear()
         installAppInformationList.addAll(installedApp)
@@ -59,22 +59,17 @@ class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListen
             }
         }
 
-        init {
-            itemView.setOnClickListener {
-                val installedInformation = itemView.tag as? InstalledAppInformation
-                installedInformation?.let {
-                    onIItemClickListener.onItemClick(installedInformation)
-                } ?: run {
-                    Toast.makeText(itemView.context, "No app found", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
         fun bind(information : InstalledAppInformation?){
             itemView.tag = information
             binding.apply {
                 appIcon.setImageDrawable(information?.icon)
                 appName.text = information?.appName
+            }
+            itemView.setOnClickListener {
+                val installedInformation = itemView.tag as? InstalledAppInformation
+                installedInformation?.let {
+                    onIItemClickListener.onItemClick(information)
+                }
             }
         }
     }

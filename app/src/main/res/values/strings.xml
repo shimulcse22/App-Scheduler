@@ -4,4 +4,12 @@
     <string name="set_date">Set date</string>
     <string name="select_date">Select date</string>
     <string name="set_time">Set Time</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="reschedule">Reschedule</string>
+    <string name="you_already_schedule">You already schedule this app on \n%s,\n do you want to cancel or update it</string>
+    <string name="app">App</string>
+    <string name="history">History</string>
+    <string name="app_list">App List</string>
+    <string name="date_and_time">%d : %d</string>
 </resources>
