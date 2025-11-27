@@ -1,9 +1,10 @@
-package com.example.appscheduler
+package com.example.appscheduler.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appscheduler.R
 import com.example.appscheduler.databinding.ItemScheduleHistoryBinding
 import com.example.appscheduler.datasource.database.AppScheduleTable
 import com.example.appscheduler.utility.DiffUtilCallback

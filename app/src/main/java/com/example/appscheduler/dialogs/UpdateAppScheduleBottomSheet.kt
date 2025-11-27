@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.dialogs
 
 import android.content.Context
 import android.os.Build
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import com.example.appscheduler.R
 import com.example.appscheduler.databinding.BottomSheetCancelScheduleBinding
 import com.example.appscheduler.datasource.model.Timer
 import com.example.appscheduler.listeners.ScheduleListener
@@ -23,7 +24,7 @@ class UpdateAppScheduleBottomSheet: BottomSheetDialogFragment() {
 
     companion object {
         val TAG = UpdateAppScheduleBottomSheet::class.simpleName
-        fun show(fragmentManager: FragmentManager,timer : Timer) {
+        fun show(fragmentManager: FragmentManager, timer : Timer) {
             return UpdateAppScheduleBottomSheet().apply {
                 arguments = Bundle().apply {
                     putParcelable(TIME, timer)

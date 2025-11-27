@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppScheduler">
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.Activity.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
@@ -26,10 +26,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.Activity.MainActivity"
             android:exported="true"/>
 
-        <activity android:name=".HistoryActivity"
+        <activity android:name=".ui.Activity.HistoryActivity"
             android:exported="true"/>
 
         <receiver android:name=".boradcastreceiver.AlarmReceiver" />

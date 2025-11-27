@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.ui.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,16 +7,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.appscheduler.ui.Activity.MainActivity
+import com.example.appscheduler.ui.viewmodel.MainViewModel
+import com.example.appscheduler.R
+import com.example.appscheduler.adapter.ScheduleHistoryAdapter
 import com.example.appscheduler.databinding.ActivityHistoryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.getValue
 
 class HistoryActivity : AppCompatActivity() {
 
     private lateinit var historyAdapter: ScheduleHistoryAdapter
     private lateinit var binding: ActivityHistoryBinding
 
-    private val viewModel : MainViewModel  by viewModel()
+    private val viewModel : MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

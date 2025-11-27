@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.ui.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.appscheduler.adapter.InstalledAppInformationAdapter
+import com.example.appscheduler.ui.viewmodel.MainViewModel
+import com.example.appscheduler.R
+import com.example.appscheduler.dialogs.UpdateAppScheduleBottomSheet
 import com.example.appscheduler.databinding.ActivityMainBinding
 import com.example.appscheduler.datasource.model.InstalledAppInformation
 import com.example.appscheduler.datasource.model.Timer
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener, ScheduleListener
     private lateinit var binding: ActivityMainBinding
     private lateinit var schedulerDialog: SchedulerDialog
 
-    private val viewModel : MainViewModel  by viewModel()
+    private val viewModel : MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +75,7 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener, ScheduleListener
                     hour = it.hour.orZero(),
                     min = it.min.orZero()
                 )
-                UpdateAppScheduleBottomSheet.show(supportFragmentManager,timer)
+                UpdateAppScheduleBottomSheet.Companion.show(supportFragmentManager,timer)
             }
         }
     }
@@ -112,7 +116,7 @@ class MainActivity : AppCompatActivity(), OnIItemClickListener, ScheduleListener
     }
 
     override fun onCancelButtonClick(timer: Timer?) {
-        cancelAlarm(this,timer)
+        cancelAlarm(this, timer)
         viewModel.cancelSchedule()
     }
 }

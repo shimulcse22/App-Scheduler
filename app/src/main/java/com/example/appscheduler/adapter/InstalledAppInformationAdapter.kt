@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -74,4 +74,3 @@ class InstalledAppInformationAdapter(val onItemClickListener: OnIItemClickListen
         }
     }
 }
-

@@ -1,6 +1,6 @@
 package com.example.appscheduler._modules
 
-import com.example.appscheduler.MainViewModel
+import com.example.appscheduler.ui.viewmodel.MainViewModel
 import com.example.appscheduler.datasource.repo.AppScheduleLocalDs
 import com.example.appscheduler.datasource.repo.AppScheduleLocalImpl
 import org.koin.androidx.viewmodel.dsl.viewModel

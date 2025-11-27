@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
